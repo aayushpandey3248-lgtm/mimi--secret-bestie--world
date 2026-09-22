@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mimi 🎀 | Secret Bestie World</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd6e8, #ffc1dc);
+  color: #4b2347;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 30px 18px;
+}
+
+.page.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255,255,255,0.75);
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 30px;
+  padding: 35px 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(150,60,100,0.18);
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  font-size: 2.8rem;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin: 15px 0;
+}
+
+.cute {
+  font-size: 1.3rem;
+}
+
+.btn {
+  border: none;
+  background: #ff4f9a;
+  color: white;
+  padding: 16px 28px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(255,79,154,0.3);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ff9ac4;
+  border-radius: 15px;
+  outline: none;
+  font-size: 1rem;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.box {
+  background: #fff0f7;
+  border-radius: 20px;
+  padding: 25px 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 5px 15px rgba(150,60,100,0.1);
+}
+
+.box:hover {
+  transform: translateY(-3px);
+}
+
+.message {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  background: #ffe0ee;
+  border-radius: 15px;
+  line-height: 1.6;
+}
+
+.quiz-option {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #fff0f7;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 10px 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.quiz-option:hover {
+  background: #ffd2e5;
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  animation: floatUp 5s linear forwards;
+  pointer-events: none;
+  font-size: 22px;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+.small {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="card">
+
+    <div style="font-size:4rem;">🎀</div>
+
+    <h1>Hey Mimi 🎀</h1>
+
+    <p class="cute">
+      I made a tiny secret world specially for you...
+    </p>
+
+    <p>
+      But shhh 🤫<br>
+      You have to unlock it first.
+    </p>
+
+    <button class="btn" onclick="showPage('lock')">
+      Unlock My Surprise 🔐
+    </button>
+
+  </div>
+</section>
+
+
+<!-- PASSWORD -->
+<section id="lock" class="page">
+  <div class="card">
+
+    <div style="font-size:3rem;">🔐</div>
+
+    <h2>Secret Entry</h2>
+
+    <p>
+      Only the real Mimi can enter 😌🎀
+    </p>
+
+    <input
+      id="password"
+      class="input"
+      type="text"
+      placeholder="Enter secret password"
+    >
+
+    <button class="btn" onclick="unlock()">
+      Unlock 💗
+    </button>
+
+    <p id="wrong" style="display:none; color:#e63972;">
+      Nopeee 😭 Try again, Mimi!
+    </p>
+
+    <button class="btn" onclick="showPage('home')"
+      style="background:#d98bb1;">
+      Go Back
+    </button>
+
+  </div>
+</section>
+
+
+<!-- MAIN WORLD -->
+<section id="world" class="page">
+  <div class="card">
+
+    <div style="font-size:4rem;">🎀💗</div>
+
+    <h1>Welcome Mimi!</h1>
+
+    <p>
+      You officially entered your secret bestie world 🥹✨
+    </p>
+
+    <div class="boxes">
+
+      <div class="box" onclick="openMessage('m1')">
+        💌<br>
+        Secret Message
+      </div>
+
+      <div class="box" onclick="openMessage('m2')">
+        🧸<br>
+        Bestie Box
+      </div>
+
+      <div class="box" onclick="openMessage('m3')">
+        🌷<br>
+        Cute Memory
+      </div>
+
+      <div class="box" onclick="openMessage('m4')">
+        💖<br>
+        Final Surprise
+      </div>
+
+    </div>
+
+    <div id="m1" class="message">
+      Mimi, you're genuinely one of those people who make ordinary days feel special. 🎀
+    </div>
+
+    <div id="m2" class="message">
+      Official bestie rule: annoying each other is compulsory. 😂💗
+    </div>
+
+    <div id="m3" class="message">
+      Some memories are small but somehow become the ones we remember the most. 🥹🌷
+    </div>
+
+    <div id="m4" class="message">
+      Thank you for being my bestie, Mimi. Thodi masti, thoda drama, aur bahut saari memories abhi baaki hain. 🫶🎀
+      <br><br>
+      Your bestie,<br>
+      Aayush 🫶
+    </div>
+
+    <button class="btn" onclick="showPage('quiz')">
+      Bestie Quiz 🎯
+    </button>
+
+  </div>
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+  <div class="card">
+
+    <div style="font-size:3rem;">🎯</div>
+
+    <h2>Bestie Quiz</h2>
+
+    <p>Who knows Mimi better? 😋</p>
+
+    <p><b>Question 1:</b><br>
+    Who is more likely to start random drama? 😂</p>
+
+    <button class="quiz-option" onclick="quizAnswer()">
+      Mimi 🎀
+    </button>
+
+    <button class="quiz-option" onclick="quizAnswer()">
+      Aayush 😭
+    </button>
+
+    <button class="quiz-option" onclick="quizAnswer()">
+      Both 💀
+    </button>
+
+    <p id="quizResult"></p>
+
+    <button class="btn" onclick="showPage('world')">
+      Back to Secret World 💗
+    </button>
+
+  </div>
+</section>
+
+
+<script>
+
+/* PAGE SWITCHING */
+function showPage(pageId) {
+
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+
+  var selectedPage = document.getElementById(pageId);
+
+  if (selectedPage) {
+    selectedPage.classList.add("active");
+    window.scrollTo(0, 0);
+  }
+}
+
+
+/* PASSWORD */
+function unlock() {
+
+  var password = document.getElementById("password").value.trim();
+
+  if (password === "MIMI🎀") {
+
+    document.getElementById("wrong").style.display = "none";
+
+    showPage("world");
+
+    createHearts();
+
+  } else {
+
+    document.getElementById("wrong").style.display = "block";
+
+  }
+}
+
+
+/* ENTER KEY FOR PASSWORD */
+document.addEventListener("DOMContentLoaded", function() {
+
+  var passwordInput = document.getElementById("password");
+
+  passwordInput.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+      unlock();
+    }
+
+  });
+
+});
+
+
+/* MESSAGE BOXES */
+function openMessage(id) {
+
+  var message = document.getElementById(id);
+
+  if (message.style.display === "block") {
+    message.style.display = "none";
+  } else {
+    message.style.display = "block";
+  }
+
+}
+
+
+/* QUIZ */
+function quizAnswer() {
+
+  document.getElementById("quizResult").innerHTML =
+    "Obviously BOTH 😭😂 You two are equally responsible! 💗";
+
+}
+
+
+/* FLOATING HEARTS */
+function createHearts() {
+
+  for (var i = 0; i < 15; i++) {
+
+    setTimeout(function() {
+
+      var heart = document.createElement("div");
+
+      heart.className = "heart";
+
+      heart.innerHTML =
+        ["💗","💕","🎀","✨","💖"][Math.floor(Math.random() * 5)];
+
+      heart.style.left =
+        Math.random() * 100 + "vw";
+
+      heart.style.animationDuration =
+        (3 + Math.random() * 3) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(function() {
+        heart.remove();
+      }, 6000);
+
+    }, i * 150);
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
