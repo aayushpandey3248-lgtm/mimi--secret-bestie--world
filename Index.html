@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mimi 🎀 | Secret Bestie World</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:"Trebuchet MS",Arial,sans-serif;
+  background:linear-gradient(135deg,#ffdbea,#ffeef6,#ffd1e5);
+  color:#54233f;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+.page{
+  display:none;
+  min-height:100vh;
+  padding:25px 16px;
+}
+
+.page.active{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  width:100%;
+  max-width:650px;
+  background:rgba(255,255,255,.82);
+  border:2px solid rgba(255,255,255,.9);
+  border-radius:30px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:0 15px 45px rgba(120,45,85,.18);
+  backdrop-filter:blur(12px);
+}
+
+h1{
+  font-size:2.5rem;
+  margin:12px 0;
+}
+
+h2{
+  font-size:2rem;
+  margin-bottom:12px;
+}
+
+p{
+  line-height:1.7;
+  margin:12px 0;
+}
+
+.btn{
+  border:0;
+  background:#ff4f9a;
+  color:white;
+  padding:14px 24px;
+  border-radius:50px;
+  font-size:1rem;
+  font-weight:bold;
+  cursor:pointer;
+  margin:8px;
+  box-shadow:0 7px 18px rgba(255,79,154,.3);
+}
+
+.btn:active{
+  transform:scale(.95);
+}
+
+.back{
+  background:#d58bb1;
+}
+
+.input{
+  width:100%;
+  padding:14px;
+  border:2px solid #ff9ac4;
+  border-radius:15px;
+  outline:none;
+  text-align:center;
+  font-size:1rem;
+  margin:10px 0;
+}
+
+.boxes{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin:20px 0;
+}
+
+.box{
+  background:#fff0f7;
+  border:2px dashed #ff9bc3;
+  border-radius:20px;
+  padding:24px 8px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.box:hover{
+  transform:translateY(-4px) rotate(-1deg);
+}
+
+.message{
+  display:none;
+  background:#ffe1ed;
+  padding:16px;
+  border-radius:18px;
+  margin:10px 0;
+  animation:pop .4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* Envelope */
+.envelope{
+  width:230px;
+  height:150px;
+  margin:25px auto;
+  background:#ff9fc5;
+  border-radius:12px;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(100,30,70,.15);
+}
+
+.envelope:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  border-left:115px solid transparent;
+  border-right:115px solid transparent;
+  border-top:80px solid #ff75ad;
+}
+
+.envelope span{
+  position:absolute;
+  width:100%;
+  top:55px;
+  left:0;
+  font-size:40px;
+}
+
+/* Letter */
+.letter{
+  display:none;
+  background:#fffdf5;
+  border:2px solid #e8cdb5;
+  border-radius:18px;
+  padding:22px;
+  text-align:left;
+  box-shadow:0 8px 20px rgba(80,40,30,.1);
+}
+
+#typedText{
+  white-space:pre-line;
+  line-height:1.8;
+}
+
+/* Timeline */
+.timeline{
+  text-align:left;
+  margin-top:20px;
+}
+
+.timeline-item{
+  background:#fff1f7;
+  border-left:5px solid #ff65a5;
+  padding:15px;
+  margin:12px 0;
+  border-radius:0 15px 15px 0;
+}
+
+/* Gallery */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:20px;
+}
+
+.photo-card{
+  background:#fff;
+  padding:8px 8px 14px;
+  border-radius:10px;
+  box-shadow:0 7px 18px rgba(80,30,60,.15);
+  transform:rotate(-2deg);
+}
+
+.photo-card:nth-child(even){
+  transform:rotate(2deg);
+}
+
+.photo{
+  height:150px;
+  background:linear-gradient(135deg,#ffc4dc,#ffe8f2);
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  overflow:hidden;
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.caption{
+  margin-top:9px;
+  font-size:.9rem;
+}
+
+/* Game */
+#gameArea{
+  height:300px;
+  background:#fff0f7;
+  border:2px dashed #ff8fbb;
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.heartGame{
+  position:absolute;
+  font-size:32px;
+  cursor:pointer;
+  animation:fall 3s linear;
+}
+
+@keyframes fall{
+  from{top:-40px}
+  to{top:320px}
+}
+
+/* Music */
+.music{
+  position:fixed;
+  top:12px;
+  right:12px;
+  z-index:20;
+}
+
+.music button{
+  border:0;
+  background:#ff4f9a;
+  color:white;
+  border-radius:50px;
+  padding:10px 15px;
+  cursor:pointer;
+}
+
+/* Floating */
+.float{
+  position:fixed;
+  bottom:-30px;
+  pointer-events:none;
+  animation:floatUp 5s linear forwards;
+  z-index:50;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translateY(-110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+/* Confetti */
+.confetti{
+  position:fixed;
+  top:-20px;
+  font-size:24px;
+  z-index:100;
+  animation:confetti 3s linear forwards;
+}
+
+@keyframes confetti{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
+}
+
+.small{
+  opacity:.7;
+  font-size:.9rem;
+}
+
+@media(max-width:500px){
+  h1{font-size:2rem}
+  .gallery{grid-template-columns:1fr 1fr}
+  .photo{height:120px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC BUTTON -->
+<div class="music">
+  <button onclick="toggleMusic()" id="musicBtn">🎵 Play</button>
+</div>
+
+<!--
+IMPORTANT:
+For music, upload your own/authorized audio file to the repository
+and rename it to music.mp3.
+-->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- HOME -->
+<section id="home" class="page active">
+<div class="card">
+
+  <div style="font-size:65px">🎀</div>
+
+  <h1>Hey Mimi 🎀</h1>
+
+  <p>
+    I made a little secret world specially for you...
+  </p>
+
+  <p>
+    There are surprises hidden inside 👀💗
+  </p>
+
+  <button class="btn" onclick="showPage('lock')">
+    Unlock My Surprise 🔐
+  </button>
+
+</div>
+</section>
+
+
+<!-- FIRST PASSWORD -->
+<section id="lock" class="page">
+<div class="card">
+
+  <div style="font-size:55px">🔐</div>
+
+  <h2>Secret Entry</h2>
+
+  <p>Only the real Mimi can enter 😌🎀</p>
+
+  <input
+    id="password"
+    class="input"
+    placeholder="Enter password"
+  >
+
+  <button class="btn" onclick="unlock()">
+    Unlock 💗
+  </button>
+
+  <p id="wrong" style="display:none;color:#e83d72">
+    Nopeee 😭 Try again!
+  </p>
+
+  <button class="btn back" onclick="showPage('home')">
+    Go Back
+  </button>
+
+</div>
+</section>
+
+
+<!-- MAIN WORLD -->
+<section id="world" class="page">
+<div class="card">
+
+  <div style="font-size:60px">🎀💗✨</div>
+
+  <h1>Welcome Mimi!</h1>
+
+  <p>
+    You officially entered your secret bestie world 🥹
+  </p>
+
+  <div class="boxes">
+
+    <div class="box" onclick="openMessage('m1')">
+      💌<br><b>Secret Message</b>
+    </div>
+
+    <div class="box" onclick="openMessage('m2')">
+      🎁<br><b>Surprise Box</b>
+    </div>
+
+    <div class="box" onclick="showPage('letter')">
+      💌<br><b>Animated Letter</b>
+    </div>
+
+    <div class="box" onclick="showPage('timeline')">
+      💖<br><b>Our Timeline</b>
+    </div>
+
+    <div class="box" onclick="showPage('gallery')">
+      📸<br><b>Our Memories</b>
+    </div>
+
+    <div class="box" onclick="showPage('game')">
+      🧸<br><b>Mini Game</b>
+    </div>
+
+  </div>
+
+  <div id="m1" class="message">
+    Mimi, you're genuinely one of those people who make ordinary days feel special. 🎀💗
+  </div>
+
+  <div id="m2" class="message">
+    Surpriseee! You found another secret box! 😂🎁💗
+  </div>
+
+  <button class="btn" onclick="showPage('secret')">
+    🔐 Secret Surprise
+  </button>
+
+  <button class="btn" onclick="showPage('final')">
+    🥹 One Last Thing...
+  </button>
+
+</div>
+</section>
+
+
+<!-- LETTER -->
+<section id="letter" class="page">
+<div class="card">
+
+  <h2>💌 A Letter For Mimi</h2>
+
+  <div class="envelope" onclick="openLetter()">
+    <span>💌</span>
+  </div>
+
+  <p class="small">Tap the envelope 🎀</p>
+
+  <div id="letterBox" class="letter">
+    <p id="typedText"></p>
+  </div>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back 💗
+  </button>
+
+</div>
+</section>
+
+
+<!-- TIMELINE -->
+<section id="timeline" class="page">
+<div class="card">
+
+  <h2>💖 Our Little Timeline</h2>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      🌷 <b>First Meeting</b><br>
+      The beginning of our bestie story.
+    </div>
+
+    <div class="timeline-item">
+      💗 <b>First Memory</b><br>
+      One small moment that became a memory.
+    </div>
+
+    <div class="timeline-item">
+      😂 <b>Funniest Moment</b><br>
+      Certified chaos. No explanation needed. 😭
+    </div>
+
+    <div class="timeline-item">
+      🎀 <b>Today</b><br>
+      And somehow we're still creating memories.
+    </div>
+
+  </div>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back 💗
+  </button>
+
+</div>
+</section>
+
+
+<!-- GALLERY -->
+<section id="gallery" class="page">
+<div class="card">
+
+  <h2>📸 Our Memories</h2>
+
+  <p>Some memories deserve their own little scrapbook. 🎀</p>
+
+  <div class="gallery">
+
+    <div class="photo-card">
+      <div class="photo">
+        <!-- Replace with: <img src="photo1.jpg"> -->
+        📸
+      </div>
+      <div class="caption">
+        That one unforgettable day 💗
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo">
+        <!-- Replace with: <img src="photo2.jpg"> -->
+        📸
+      </div>
+      <div class="caption">
+        Certified chaos 😂🎀
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo">
+        <!-- Replace with: <img src="photo3.jpg"> -->
+        📸
+      </div>
+      <div class="caption">
+        Bestie moments 🥹
+      </div>
+    </div>
+
+    <div class="photo-card">
+      <div class="photo">
+        <!-- Replace with: <img src="photo4.jpg"> -->
+        📸
+      </div>
+      <div class="caption">
+        More memories loading... ✨
+      </div>
+    </div>
+
+  </div>
+
+  <p class="small">
+    Photos can be added later by uploading them to the GitHub repository.
+  </p>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back 💗
+  </button>
+
+</div>
+</section>
+
+
+<!-- MINI GAME -->
+<section id="game" class="page">
+<div class="card">
+
+  <h2>🧸 Catch The Hearts</h2>
+
+  <p>
+    Tap the falling hearts before they disappear! 💗
+  </p>
+
+  <h3>
+    Score: <span id="score">0</span>
+  </h3>
+
+  <div id="gameArea"></div>
+
+  <button class="btn" onclick="startGame()">
+    Start Game 🎮
+  </button>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back
+  </button>
+
+</div>
+</section>
+
+
+<!-- SECOND PASSWORD -->
+<section id="secret" class="page">
+<div class="card">
+
+  <div style="font-size:55px">🔐🎀</div>
+
+  <h2>Another Secret?</h2>
+
+  <p>
+    Hmm... maybe there is one more hidden surprise 👀
+  </p>
+
+  <input
+    id="secretPassword"
+    class="input"
+    placeholder="Special password"
+  >
+
+  <button class="btn" onclick="secondUnlock()">
+    Open Secret 💗
+  </button>
+
+  <p id="secretWrong" style="display:none;color:#e83d72">
+    That's not it 👀
+  </p>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back
+  </button>
+
+</div>
+</section>
+
+
+<!-- SECRET RESULT -->
+<section id="secretResult" class="page">
+<div class="card">
+
+  <div style="font-size:70px">🎁✨</div>
+
+  <h1>You Found It!</h1>
+
+  <p>
+    Okay Mimi... you officially discovered the hidden secret. 😂🎀
+  </p>
+
+  <p>
+    <b>Bestie level: UNLOCKED 💗</b>
+  </p>
+
+  <button class="btn" onclick="showPage('final')">
+    One Last Thing... 🥹
+  </button>
+
+</div>
+</section>
+
+
+<!-- FINAL -->
+<section id="final" class="page">
+<div class="card">
+
+  <div style="font-size:70px">🥹💗🎀</div>
+
+  <h1>One Last Thing...</h1>
+
+  <p id="finalText">
+    Mimi, thank you for being a part of so many little memories.
+    Here's to more laughs, more nonsense, more teasing,
+    and many more memories together. 🫶🎀
+  </p>
+
+  <button class="btn" onclick="celebrate()">
+    Open Final Surprise ✨
+  </button>
+
+  <div id="finalMessage" style="display:none;margin-top:20px">
+
+    <h2>You're Stuck With Me 😂💗</h2>
+
+    <p>
+      No refunds. No exchanges. Bestie contract is permanent. 😭🎀
+    </p>
+
+    <p>
+      Your bestie,<br>
+      <b>Aayush 🫶</b>
+    </p>
+
+  </div>
+
+  <button class="btn back" onclick="showPage('world')">
+    Back to Secret World
+  </button>
+
+</div>
+</section>
+
+
+<script>
+
+/* PAGE SYSTEM */
+function showPage(id){
+
+  document.querySelectorAll(".page").forEach(function(page){
+    page.classList.remove("active");
+  });
+
+  const page=document.getElementById(id);
+
+  if(page){
+    page.classList.add("active");
+    window.scrollTo(0,0);
+  }
+}
+
+
+/* FIRST PASSWORD */
+function unlock(){
+
+  const password=
+    document.getElementById("password").value.trim();
+
+  if(password==="MIMI🎀"){
+
+    document.getElementById("wrong").style.display="none";
+
+    showPage("world");
+
+    floatingHearts();
+
+  }else{
+
+    document.getElementById("wrong").style.display="block";
+
+  }
+}
+
+
+/* SECOND PASSWORD */
+function secondUnlock(){
+
+  const password=
+    document.getElementById("secretPassword").value.trim();
+
+  /* Change this password whenever you want */
+  if(password==="BESTIE💗"){
+
+    document.getElementById("secretWrong").style.display="none";
+
+    showPage("secretResult");
+
+    floatingHearts();
+
+  }else{
+
+    document.getElementById("secretWrong").style.display="block";
+
+  }
+}
+
+
+/* ENTER KEY */
+document.addEventListener("DOMContentLoaded",function(){
+
+  document.getElementById("password")
+  .addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+      unlock();
+    }
+
+  });
+
+  document.getElementById("secretPassword")
+  .addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+      secondUnlock();
+    }
+
+  });
+
+});
+
+
+/* MESSAGE */
+function openMessage(id){
+
+  const message=document.getElementById(id);
+
+  if(message.style.display==="block"){
+    message.style.display="none";
+  }else{
+    message.style.display="block";
+  }
+
+}
+
+
+/* MUSIC */
+function toggleMusic(){
+
+  const music=document.getElementById("music");
+  const button=document.getElementById("musicBtn");
+
+  if(music.paused){
+
+    music.play();
+
+    button.innerHTML="⏸ Pause";
+
+  }else{
+
+    music.pause();
+
+    button.innerHTML="🎵 Play";
+
+  }
+
+}
+
+
+/* LETTER */
+function openLetter(){
+
+  const box=document.getElementById("letterBox");
+  const text=document.getElementById("typedText");
+
+  box.style.display="block";
+
+  text.innerHTML="";
+
+  const letter=
+`Dear Mimi 🎀,
+
+Thodi masti, thoda drama,
+aur bahut saari memories... 🥹
+
+You're one of those people
+who can make a normal day
+feel a little more special.
+
+Thank you for all the laughs,
+the random moments,
+and all the memories.
+
+Here's to many more. 💗
+
+Your bestie,
+Aayush 🫶`;
+
+  let i=0;
+
+  function type(){
+
+    if(i<letter.length){
+
+      text.innerHTML+=letter.charAt(i);
+
+      i++;
+
+      setTimeout(type,35);
+
+    }
+
+  }
+
+  type();
+
+}
+
+
+/* GAME */
+let score=0;
+let gameTimer;
+
+function startGame(){
+
+  score=0;
+
+  document.getElementById("score").innerText=score;
+
+  const area=document.getElementById("gameArea");
+
+  area.innerHTML="";
+
+  clearInterval(gameTimer);
+
+  gameTimer=setInterval(function(){
+
+    const heart=document.createElement("div");
+
+    heart.className="heartGame";
+
+    heart.innerHTML=
+      ["💗","💕","💖","🎀"][Math.floor(Math.random()*4)];
+
+    heart.style.left=
+      Math.random()*90+"%";
+
+    heart.onclick=function(){
+
+      score++;
+
+      document.getElementById("score").innerText=score;
+
+      heart.remove();
+
+    };
+
+    area.appendChild(heart);
+
+    setTimeout(function(){
+
+      if(heart.parentNode){
+        heart.remove();
+      }
+
+    },3000);
+
+  },700);
+
+}
+
+
+/* FLOATING HEARTS */
+function floatingHearts(){
+
+  for(let i=0;i<15;i++){
+
+    setTimeout(function(){
+
+      const heart=document.createElement("div");
+
+      heart.className="float";
+
+      heart.innerHTML=
+        ["💗","💕","🎀","✨","🦋"][Math.floor(Math.random()*5)];
+
+      heart.style.left=
+        Math.random()*100+"vw";
+
+      heart.style.animationDuration=
+        (3+Math.random()*3)+"s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(function(){
+        heart.remove();
+      },6000);
+
+    },i*150);
+
+  }
+
+}
+
+
+/* FINAL CONFETTI */
+function celebrate(){
+
+  document.getElementById("finalMessage").style.display="block";
+
+  for(let i=0;i<60;i++){
+
+    setTimeout(function(){
+
+      const c=document.createElement("div");
+
+      c.className="confetti";
+
+      c.innerHTML=
+        ["💗","🎀","✨","💕","🌷","🦋"][Math.floor(Math.random()*6)];
+
+      c.style.left=
+        Math.random()*100+"vw";
+
+      c.style.animationDuration=
+        (2+Math.random()*2)+"s";
+
+      document.body.appendChild(c);
+
+      setTimeout(function(){
+        c.remove();
+      },4500);
+
+    },i*35);
+
+  }
+
+}
+
+</script>
+
+</body>
+  </html>
